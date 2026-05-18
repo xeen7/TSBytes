@@ -7,8 +7,6 @@ function assertEqual(name: string, actual: any, expected: any) {
   }
 }
 
-// ─── 1. Closures & Lexical Scope ────────────────────────────────────────────
-
 function makeAdder(base: number) {
   return (x: number) => base + x;
 }
@@ -29,8 +27,6 @@ function testClosures() {
   assertEqual("Acc inc 3", inc(), 13.0);
 }
 
-// ─── 2. Try / Catch / Finally ───────────────────────────────────────────────
-
 function testTryCatch() {
   let log = "";
 
@@ -45,7 +41,6 @@ function testTryCatch() {
 
   assertEqual("Try-catch-finally log", log, "try-catch-finally");
 
-  // Catch with no throw
   let safe = "";
   try {
     safe = "ok";
@@ -54,8 +49,6 @@ function testTryCatch() {
   }
   assertEqual("No-throw try", safe, "ok");
 }
-
-// ─── 3. Switch Statement ────────────────────────────────────────────────────
 
 function grade(score: number): string {
   switch (true) {
@@ -72,8 +65,6 @@ function testSwitch() {
   assertEqual("Grade 71", grade(71), "C");
   assertEqual("Grade 50", grade(50), "F");
 }
-
-// ─── 4. Higher-Order Functions ───────────────────────────────────────────────
 
 function map(arr: any[], fn: any): any[] {
   const result: any[] = [];
@@ -114,8 +105,6 @@ function testHigherOrder() {
   assertEqual("Reduce sum", sum, 15.0);
 }
 
-// ─── 5. Chained String Operations ───────────────────────────────────────────
-
 function testStrings() {
   const s = "  Hello, World!  ";
   const trimmed = s.trim();
@@ -138,11 +127,9 @@ function testStrings() {
   assertEqual("Join", joined, "a-b-c");
 }
 
-// ─── 6. Bitwise Operators ───────────────────────────────────────────────────
-
 function testBitwise() {
-  const a = 10;  // 0b1010
-  const b = 12;  // 0b1100
+  const a = 10;  
+  const b = 12;  
 
   assertEqual("AND",  (a & b),   8.0);
   assertEqual("OR",   (a | b),  14.0);
@@ -150,8 +137,6 @@ function testBitwise() {
   assertEqual("Left shift",  (1 << 3),  8.0);
   assertEqual("Right shift", (16 >> 2), 4.0);
 }
-
-// ─── 7. Nullish / Optional ───────────────────────────────────────────────────
 
 function testNullish() {
   const a: any = null;
@@ -166,8 +151,6 @@ function testNullish() {
   assertEqual("NullishAssign ??=",       (a ?? "assigned"), "assigned");
 }
 
-// ─── 8. for...in ─────────────────────────────────────────────────────────────
-
 function testForIn() {
   const obj: any = { x: 1, y: 2, z: 3 };
   let keys: any[] = [];
@@ -176,8 +159,6 @@ function testForIn() {
   }
   assertEqual("for..in length", keys.length, 3.0);
 }
-
-// ─── Entry Point ─────────────────────────────────────────────────────────────
 
 function main() {
   console.log("=== RUNNING CONTROL FLOW & HIGHER-ORDER FUNCTIONS TEST SUITE ===");

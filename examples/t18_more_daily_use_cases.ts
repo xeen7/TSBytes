@@ -6,7 +6,6 @@ function assertEqual(actual: any, expected: any, description: string) {
   }
 }
 
-// === 1. Todo List & Task Manager (CRUD Operations & Filtering) ===
 interface Todo {
   id: number;
   title: string;
@@ -69,27 +68,22 @@ function runTaskManagerTests() {
   assertEqual(id2, 2, "Second todo id");
   assertEqual(id3, 3, "Third todo id");
 
-  // Initial count of high priority
   assertEqual(manager.getPriorityCount("high"), 2, "High priority todo count");
 
-  // Toggle todo 1
   const toggleResult = manager.toggleTodo(id1);
   assertEqual(toggleResult, true, "Toggle todo success");
-  
-  // Filter active and completed
+
   const activeTodos = manager.getTodos(false);
   const completedTodos = manager.getTodos(true);
   assertEqual(activeTodos.length, 2, "Active todos count");
   assertEqual(completedTodos.length, 1, "Completed todos count");
   assertEqual(completedTodos[0].title, "Buy groceries", "Completed todo title");
 
-  // Delete todo 2
   const deleteResult = manager.deleteTodo(id2);
   assertEqual(deleteResult, true, "Delete todo success");
   assertEqual(manager.getTodos(null).length, 2, "Total todos count after deletion");
 }
 
-// === 2. Profile Settings & Configuration Merges (Object spreads & destructuring) ===
 function runSettingsMergeTests() {
   const defaultSettings: any = {
     theme: "light",
@@ -107,7 +101,6 @@ function runSettingsMergeTests() {
     }
   };
 
-  // Merge default and user settings
   const mergedSettings: any = {
     ...defaultSettings,
     ...userSettings,
@@ -123,21 +116,17 @@ function runSettingsMergeTests() {
   assertEqual(mergedSettings.notifications.push, true, "Overridden nested custom setting");
 }
 
-// === 3. Simple Form Validator (Dynamic validations & regex matching) ===
 function validateForm(formData: any): any {
   const errors: any = {};
-  
-  // Name validation
+
   if (!formData.name || formData.name.length < 3) {
     errors.name = "Name must be at least 3 characters long";
   }
 
-  // Age validation
   if (formData.age === null || formData.age < 18) {
     errors.age = "You must be at least 18 years old";
   }
 
-  // Simple email pattern check
   if (!formData.email || !formData.email.includes("@")) {
     errors.email = "Invalid email format";
   }
@@ -171,7 +160,6 @@ function runFormValidatorTests() {
   assertEqual(invalidResult.errors.email, "Invalid email format", "Error for malformed email");
 }
 
-// === 4. Data Transformation Utilities (String truncation & grouping) ===
 function truncate(str: string, maxLength: number) {
   if (str.length <= maxLength) {
     return str;
@@ -185,7 +173,6 @@ function runUtilityTests() {
   assertEqual(truncate("Short", 10), "Short", "Truncate string within limit");
 }
 
-// === Main Execution Runner ===
 function main() {
   console.log("=== RUNNING MORE DAILY USE CASES TEST SUITE ===");
   

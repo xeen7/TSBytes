@@ -1,14 +1,14 @@
 [package]
 name = "tsbytes"
-version = "1.0.0-rc.4"
+version = "1.0.0-rc.9"
 edition = "2021"
 description = "Compile TypeScript directly to native JVM bytecode and executable JARs"
 license = "MIT"
 readme = "README.md"
 keywords = ["typescript", "compiler", "jvm", "bytecode", "java"]
 categories = ["compilers", "development-tools"]
-homepage = "https://github.com/xeen7/TSBytes"
-repository = "https://github.com/xeen7/TSBytes"
+homepage = "https://github.com/xeen7/tsbytes"
+repository = "https://github.com/xeen7/tsbytes"
 
 [[bin]]
 name = "tsb"

@@ -1,6 +1,4 @@
-// TSDroid Enterprise Features & Architecture Test Suite
-// Demonstrates advanced multi-scope closures, class inheritance, getters/setters,
-// multi-level destructuring, tagged templates, and async generators.
+
 
 function assertEqual(name: string, expected: any, actual: any) {
     if (expected === actual) {
@@ -11,7 +9,6 @@ function assertEqual(name: string, expected: any, actual: any) {
     }
 }
 
-// 1. Multi-Scope Lexical Closures & Currying
 function createMultiplier(factor: number) {
     let offset = 10;
     return (x: number) => {
@@ -20,7 +17,6 @@ function createMultiplier(factor: number) {
     };
 }
 
-// 2. Advanced Class Inheritance, Getters, Setters, and Static Methods
 class BaseService {
     static serviceVersion = "v2.5.0";
     serviceName: string;
@@ -61,8 +57,7 @@ class EnterpriseAuthService extends BaseService {
     }
 }
 
-// 4. Tagged Templates & Complex String Processing
-function sqlQuery(strings: string[], ...values: any[]) {
+function sqlQuery(strings: readonly string[], ...values: any[]) {
     let result: any = strings[0];
     for (let i = 0; i < values.length; i++) {
         result += values[i] + strings[i + 1];
@@ -70,7 +65,6 @@ function sqlQuery(strings: string[], ...values: any[]) {
     return result;
 }
 
-// 6. Async Generators & Higher-Order Pipelines
 async function* dataStreamGenerator() {
     yield await Promise.resolve("Packet#1");
     yield await Promise.resolve("Packet#2");
@@ -80,23 +74,20 @@ async function* dataStreamGenerator() {
 async function main() {
     console.log("=== RUNNING ENTERPRISE ARCHITECTURE TEST SUITE ===");
 
-    let triplerWithOffset = createMultiplier(3); // factor=3 -> localMultiplier=6. (x*6)+10
-    assertEqual("Curried multi-scope closure 1", 40, triplerWithOffset(5)); // (5*6)+10 = 40
-    assertEqual("Curried multi-scope closure 2", 70, triplerWithOffset(10)); // (10*6)+10 = 70
+    let triplerWithOffset = createMultiplier(3); 
+    assertEqual("Curried multi-scope closure 1", 40, triplerWithOffset(5)); 
+    assertEqual("Curried multi-scope closure 2", 70, triplerWithOffset(10)); 
 
     assertEqual("Static Class Property", "v2.5.0", BaseService.serviceVersion);
     let authService = new EnterpriseAuthService("OAuthService", "xyz789");
     assertEqual("Inherited and overridden getStatus", "Enterprise Base status: OAuthService (Bearer xyz789)", authService.getStatus());
 
-    // Update via setter
     authService.authToken = "abc123";
     assertEqual("Getter after setter update", "Bearer abc123", authService.authToken);
 
-    // Class method accepting closure callback
     let actionResult = authService.executeAction((t: string) => "Action authenticated with " + t);
     assertEqual("Class method HOF execution", "Action authenticated with abc123", actionResult);
 
-    // 3. Multi-Level Destructuring with Defaults & Rest
     let configuration: any = {
         app: {
             port: 8080,
@@ -114,13 +105,11 @@ async function main() {
     assertEqual("Multi-level destructuring flagB", false, flagB);
     assertEqual("Multi-level destructuring default timeout", 5000, timeout);
 
-    // Tagged template SQL builder
     let tableName = "transactions";
     let minAmount = 500;
     let queryStr = sqlQuery`SELECT * FROM ${tableName} WHERE amount >= ${minAmount} ORDER BY date DESC`;
     assertEqual("Tagged template SQL builder", "SELECT * FROM transactions WHERE amount >= 500 ORDER BY date DESC", queryStr);
 
-    // 5. Nested Try-Catch-Finally with Conditional Rethrow
     let catchCount = 0;
     let finallyCount = 0;
     try {
@@ -129,7 +118,7 @@ async function main() {
         } catch (innerErr: any) {
             catchCount += 1;
             if (innerErr.message === "Critical system fault") {
-                throw innerErr; // Rethrow to outer
+                throw innerErr; 
             }
         } finally {
             finallyCount += 1;
@@ -143,7 +132,6 @@ async function main() {
     assertEqual("Nested Try-Catch catch count", 2, catchCount);
     assertEqual("Nested Try-Catch finally count", 2, finallyCount);
 
-    // 6. Async Generators
     let streamedPackets: any[] = [];
     for await (const pkt of dataStreamGenerator()) {
         streamedPackets.push(pkt);

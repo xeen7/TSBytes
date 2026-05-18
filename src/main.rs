@@ -9,7 +9,7 @@ use colored::Colorize;
     name = "tsb",
     version,
     about = "Compile TypeScript directly to JVM bytecode and executable JARs",
-    long_about = "TSBytes compiles TypeScript source files directly to JVM bytecode, \
+    long_about = "tsbytes compiles TypeScript source files directly to JVM bytecode, \
 then packages them into standard, executable JAR files.\n\
 No Kotlin. No Gradle. No runtime. Pure native.\n\n\
 Use 'tsb init' to create a new TypeScript-to-JVM project."
@@ -21,7 +21,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Create a new TSBytes project
+    /// Create a new tsbytes project
     Init {
         /// Project directory (created if it doesn't exist)
         #[arg(default_value = ".")]
@@ -42,7 +42,7 @@ enum Commands {
         output: PathBuf,
 
         /// JVM package name
-        #[arg(short, long, default_value = "com.TSBytes.app")]
+        #[arg(short, long, default_value = "com.tsbytes.app")]
         package: String,
     },
 
@@ -56,7 +56,7 @@ enum Commands {
         output: PathBuf,
 
         /// JVM package name (e.g. com.example)
-        #[arg(short, long, default_value = "com.TSBytes.app")]
+        #[arg(short, long, default_value = "com.tsbytes.app")]
         package: String,
     },
 }
@@ -75,7 +75,7 @@ fn main() {
             });
 
             eprintln!(
-                "{} Creating new TSBytes project: {}",
+                "{} Creating new tsbytes project: {}",
                 "⚡".bold(),
                 project_name.bold()
             );

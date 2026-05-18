@@ -22,7 +22,7 @@ class ConfigManager {
 }
 
 function testDestructuring() {
-  // Nested object & array destructuring with default fallbacks
+  
   const user = {
     name: "Alice",
     details: {
@@ -43,7 +43,6 @@ function testDestructuring() {
   assertEqual("Destructured Notification Pref", notifications, true);
   assertEqual("Destructured Default Theme", theme, "dark");
 
-  // Destructure array with rest and defaults
   const colors = ["red"];
   const [primary, secondary = "blue", ...rest] = colors as any;
   assertEqual("Primary Color", primary, "red");
@@ -54,12 +53,10 @@ function testDestructuring() {
 function main() {
   console.log("=== RUNNING ADVANCED DESTRUCTURING & CLASSES TEST SUITE ===");
 
-  // Test Class Component
   const manager = new ConfigManager();
   assertEqual("Class Endpoint Output", manager.getEndpoint(), "localhost:8080");
   assertEqual("Class Static Field Init", ConfigManager.debug, true);
 
-  // Test Destructuring
   testDestructuring();
 
   console.log("=== ALL EXAMPLES COMPLETED SUCCESSFULLY ===");

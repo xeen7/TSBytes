@@ -9,7 +9,6 @@ function assertEqual(actual: any, expected: any, description: string) {
 function main() {
   console.log("=== RUNNING ADVANCED COMPILER SUITE ===");
 
-  // 1. Dynamic TypeOf Verification
   console.log("\n--- 1. Testing Dynamic typeof ---");
   assertEqual(typeof 42, "number", "typeof number");
   assertEqual(typeof "hello", "string", "typeof string");
@@ -21,7 +20,6 @@ function main() {
   const myFunc = (x: number) => x * 2;
   assertEqual(typeof myFunc, "function", "typeof closure function");
 
-  // 2. Logical & Nullish Coalescing Operators
   console.log("\n--- 2. Testing Logical & Nullish Coalescing ---");
   const nullVal: any = null;
   const undefVal: any = undefined;
@@ -33,10 +31,10 @@ function main() {
 
   assertEqual(true && "right", "right", "true && right");
   assertEqual(false && "right", false, "false && right");
-  assertEqual("left" || "right", "left", "string || right");
+  const leftStr = "left";
+  assertEqual(leftStr || "right", "left", "string || right");
   assertEqual(false || "right", "right", "false || right");
 
-  // 3. Optional Chaining (?.), Objects, and Prototypes
   console.log("\n--- 3. Testing Optional Chaining & Objects ---");
   const nestedObj: any = {
     nested: {
@@ -50,7 +48,6 @@ function main() {
   assertEqual(nestedObj?.nonExistent?.prop, undefined, "nestedObj?.nonExistent?.prop");
   assertEqual(nestedObj?.nonExistent?.method?.(), undefined, "nestedObj?.nonExistent?.method?.()");
 
-  // 4. Array Methods and Spread Operations
   console.log("\n--- 4. Testing Array Operations & Spreads ---");
   const arr = [1, 2, 3];
   assertEqual(arr.length, 3, "initial array length");
@@ -66,7 +63,6 @@ function main() {
   assertEqual(arr2[1], 1, "spread array [1]");
   assertEqual(arr2[4], 4, "spread array [4]");
 
-  // 5. Stateful Lexical Scoping and Shared Box Mutability
   console.log("\n--- 5. Testing Lexical Scoping Mutability ---");
   let sharedState = { count: 0 };
   const incrementer = () => {

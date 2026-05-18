@@ -1,7 +1,6 @@
 function main() {
   console.log("=== RUNNING COMPLEX FEATURES TEST ===");
 
-  // 1. Loop Control Flow with Break/Continue
   console.log("1. Testing Loop Control Flow (Break/Continue):");
   let primeSum = 0;
   let count = 0;
@@ -22,17 +21,16 @@ function main() {
   }
 
   console.log("Sum of primes under 20:");
-  console.log(primeSum); // 2 + 3 + 5 + 7 + 11 + 13 + 17 + 19 = 77
+  console.log(primeSum); 
   console.log("Count of primes:");
-  console.log(count); // 8
+  console.log(count); 
 
-  // 2. Nested Try-Catch-Finally with Rethrow
   console.log("2. Testing Nested Exceptions & Rethrows:");
   let outerCatchRan = false;
   let innerCatchRan = false;
   let innerFinallyRan = false;
   let outerFinallyRan = false;
-  let caughtErrorMsg = "";
+  let caughtErrorMsg: any = "";
 
   try {
     try {
@@ -42,7 +40,7 @@ function main() {
       innerCatchRan = true;
       console.log("  Inner catch caught exception:");
       console.log(e);
-      throw e; // Rethrow to outer try-catch!
+      throw e; 
     } finally {
       innerFinallyRan = true;
       console.log("  Inner finally executed.");
@@ -68,7 +66,6 @@ function main() {
   console.log("Caught message is correct:");
   console.log(caughtErrorMsg === "Inner Error Message");
 
-  // 3. Stateful Closures / Lexical Capturing
   console.log("3. Testing Stateful Closures:");
   let counter = { value: 0 };
   let makeIncrementer = (incrementBy: number) => {
@@ -82,11 +79,11 @@ function main() {
   let incBy5 = makeIncrementer(5);
 
   console.log("Increment by 2 first time:");
-  console.log(incBy2()); // 2
+  console.log(incBy2()); 
   console.log("Increment by 5 first time:");
-  console.log(incBy5()); // 7
+  console.log(incBy5()); 
   console.log("Increment by 2 second time:");
-  console.log(incBy2()); // 9
+  console.log(incBy2()); 
   console.log("Final counter value is 9:");
   console.log(counter.value === 9);
 

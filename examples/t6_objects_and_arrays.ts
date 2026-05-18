@@ -1,7 +1,6 @@
 function main() {
   console.log("=== RUNNING OBJECTS AND ARRAYS TEST ===");
 
-  // 1. Complex nested objects & arrays
   const user = {
     name: "Alex",
     details: {
@@ -27,7 +26,6 @@ function main() {
   console.log("City:");
   console.log(user.details.address.city);
 
-  // 2. Modifying nested properties and array indices
   user.details.age = 31;
   console.log("Updated age:");
   console.log(user.details.age);
@@ -36,7 +34,6 @@ function main() {
   console.log("Updated second skill:");
   console.log(user.details.skills[1]);
 
-  // 3. Array operations (push, pop, length)
   const numbers = [10, 20, 30];
   console.log("Initial array length:");
   console.log(numbers.length);
@@ -53,7 +50,6 @@ function main() {
   console.log("Length after pop:");
   console.log(numbers.length);
 
-  // 4. Optional chaining and nullish coalescing
   const config = {
     theme: "dark",
     settings: {
@@ -65,7 +61,7 @@ function main() {
   console.log("Notifications enabled (coalesced):");
   console.log(notifyEnabled);
 
-  const missingVal = config?.settings?.missingProp ?? "default_value";
+  const missingVal = (config?.settings as any)?.missingProp ?? "default_value";
   console.log("Missing property fallback:");
   console.log(missingVal);
 

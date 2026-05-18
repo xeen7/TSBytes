@@ -6,8 +6,7 @@ function assertEqual(actual: any, expected: any, description: string) {
   }
 }
 
-// === 1. TS Decorators (cleanly parsed and erased) ===
-function logged(target: any, key: string, descriptor: any) {
+function logged(target: any, key: string, descriptor?: any) {
   return descriptor;
 }
 
@@ -26,15 +25,13 @@ class UserProfile {
   }
 }
 
-// === 2. Advanced TS Type System Constructs (type-checked and erased) ===
 type Point = { x: number; y: number };
-type Point3D = Point & { z: number }; // Intersection Type
+type Point3D = Point & { z: number }; 
 
-type ReadonlyPoint = { readonly [P in keyof Point]: Point[P] }; // Mapped Type & keyof
-type IsString<T> = T extends string ? true : false; // Conditional Type
-type InferElement<T> = T extends (infer U)[] ? U : T; // infer keyword
+type ReadonlyPoint = { readonly [P in keyof Point]: Point[P] }; 
+type IsString<T> = T extends string ? true : false; 
+type InferElement<T> = T extends (infer U)[] ? U : T; 
 
-// === 3. Generators and yield / yield* ===
 function* fibonacci(limit: number) {
   let a = 0;
   let b = 1;
@@ -48,18 +45,16 @@ function* fibonacci(limit: number) {
   }
 }
 
-// Sub-generator for yield* delegation
 function* innerGen() {
   yield 100;
   yield 200;
 }
 
 function* outerGen() {
-  yield* innerGen(); // yield* delegation
+  yield* innerGen(); 
   yield 300;
 }
 
-// === 4. Async Generators and for await...of loops ===
 async function* asyncCountdown(start: number) {
   let current = start;
   while (current > 0) {
@@ -80,11 +75,9 @@ async function runAsyncLoop() {
 async function runTests() {
   console.log("=== RUNNING GENERATORS & ASYNC COMPILER TEST SUITE ===");
 
-  // Test Decorator-erased class details
   const user = new UserProfile("Alice", "Admin");
   assertEqual(user.getDetails(), "Alice (Admin)", "Decorator method invocation");
 
-  // Test standard generator
   console.log("\n--- Testing standard generator (Fibonacci) ---");
   const fib = fibonacci(5);
   assertEqual(fib.next().value, 0, "Fibonacci term 1");
@@ -94,7 +87,6 @@ async function runTests() {
   assertEqual(fib.next().value, 3, "Fibonacci term 5");
   assertEqual(fib.next().done, true, "Fibonacci finished");
 
-  // Test yield* delegation generator
   console.log("\n--- Testing yield* delegation generator ---");
   const out = outerGen();
   assertEqual(out.next().value, 100, "yield* term 1");
@@ -102,11 +94,9 @@ async function runTests() {
   assertEqual(out.next().value, 300, "outer term 3");
   assertEqual(out.next().done, true, "outer finished");
 
-  // Test async generators and for await...of loops
   console.log("\n--- Testing async generators & for await...of loops ---");
   const asyncResultPromise = runAsyncLoop();
-  
-  // Await the CompletableFuture on the JVM
+
   const finalSum = await asyncResultPromise;
   assertEqual(finalSum, 6, "Sum of async countdown 3 + 2 + 1");
 

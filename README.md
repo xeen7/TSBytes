@@ -1,26 +1,26 @@
-# TSBytes ⚡
+# tsbytes ⚡
 
-[![Crates.io Version](https://img.shields.io/crates/v/TSBytes.svg?style=flat-square&color=orange)](https://crates.io/crates/TSBytes)
-[![Crates.io Downloads](https://img.shields.io/crates/d/TSBytes.svg?style=flat-square&color=blue)](https://crates.io/crates/TSBytes)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/samon/TSBytes/rust.yml?branch=main&style=flat-square)](https://github.com/samon/TSBytes/actions)
-[![License](https://img.shields.io/crates/l/TSBytes.svg?style=flat-square&color=green)](https://github.com/samon/TSBytes/blob/main/LICENSE)
+[![Crates.io Version](https://img.shields.io/crates/v/tsbytes.svg?style=flat-square&color=orange)](https://crates.io/crates/tsbytes)
+[![Crates.io Downloads](https://img.shields.io/crates/d/tsbytes.svg?style=flat-square&color=blue)](https://crates.io/crates/tsbytes)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/samon/tsbytes/rust.yml?branch=main&style=flat-square)](https://github.com/samon/tsbytes/actions)
+[![License](https://img.shields.io/crates/l/tsbytes.svg?style=flat-square&color=green)](https://github.com/samon/tsbytes/blob/main/LICENSE)
 
 **The High-Performance Native TypeScript Compiler for the JVM.**  
 *Compile TypeScript directly to native JVM bytecode and executable JARs — without Node.js, V8, Kotlin, or Gradle.*
 
 ---
 
-## 🚀 What is TSBytes?
+## 🚀 What is tsbytes?
 
-**TSBytes** is a cutting-edge compiler written in Rust that takes standard TypeScript source files and compiles them directly into Java `.class` files and standalone, executable `.jar` archives. 
+**tsbytes** is a cutting-edge compiler written in Rust that takes standard TypeScript source files and compiles them directly into Java `.class` files and standalone, executable `.jar` archives. 
 
-Traditional TypeScript execution requires a heavy runtime environment like Node.js, Bun, or Deno. TSBytes bypasses interpreter runtimes entirely, translating your TypeScript syntax directly into native, optimized JVM bytecode. You keep the standard TypeScript developer experience — `node_modules`, type checking, and modern ES features — while gaining the legendary performance, reliability, and security of the JVM ecosystem.
+Traditional TypeScript execution requires a heavy runtime environment like Node.js, Bun, or Deno. tsbytes bypasses interpreter runtimes entirely, translating your TypeScript syntax directly into native, optimized JVM bytecode. You keep the standard TypeScript developer experience — `node_modules`, type checking, and modern ES features — while gaining the legendary performance, reliability, and security of the JVM ecosystem.
 
 ---
 
 ## ⚡ Performance Comparison
 
-| Metric | Node.js (V8) | JVM + Kotlin / Java | TSBytes (Compiled TS) |
+| Metric | Node.js (V8) | JVM + Kotlin / Java | tsbytes (Compiled TS) |
 | :--- | :---: | :---: | :---: |
 | **Startup / Cold Start** | Slow (50ms+) | Slow (150ms+) | **Ultra-Fast (3ms - 5ms)** |
 | **Memory Footprint** | Large (30MB+) | Large (80MB+) | **Extremely Low (8MB)** |
@@ -29,9 +29,9 @@ Traditional TypeScript execution requires a heavy runtime environment like Node.
 
 ---
 
-## 💡 Key Use Cases (Where TSBytes Shines)
+## 💡 Key Use Cases (Where tsbytes Shines)
 
-TSBytes is exceptionally well-suited for high-throughput, modern infrastructure where speed, portability, and security are paramount:
+tsbytes is exceptionally well-suited for high-throughput, modern infrastructure where speed, portability, and security are paramount:
 
 *   ⚡ **High-Performance Serverless & Microservices**: Achieve near-instant millisecond cold starts on AWS Lambda, Google Cloud Functions, or Kubernetes.
 *   🛠️ **Zero-Dependency CLI Tools**: Compile your TypeScript command-line utilities into a single, highly portable `.jar` file that runs anywhere Java is installed.
@@ -46,10 +46,10 @@ TSBytes is exceptionally well-suited for high-throughput, modern infrastructure 
 Get up and running in seconds with `cargo`:
 
 ```bash
-# Install the TSBytes compiler globally
-cargo install TSBytes
+# Install the tsbytes compiler globally
+cargo install tsbytes
 
-# Create a new TSBytes project template
+# Create a new tsbytes project template
 tsb init my-app
 cd my-app
 
@@ -63,12 +63,12 @@ java -jar app.jar
 ## ⚙️ How It Works Under the Hood
 
 ```
-TypeScript Source  →  TSBytes Compiler  →  JVM Bytecode  →  Executable JAR
+TypeScript Source  →  tsbytes Compiler  →  JVM Bytecode  →  Executable JAR
    (your code)            (Rust)             (.class)         (java -jar)
 ```
 
 1. **Write standard TypeScript**: Fully compatible with standard ES2020 types and syntax.
-2. **AST Parsing**: TSBytes parses your source code and builds an optimized Middle Intermediate Representation (MIR) and High Intermediate Representation (HIR) using SWC.
+2. **AST Parsing**: tsbytes parses your source code and builds an optimized Middle Intermediate Representation (MIR) and High Intermediate Representation (HIR) using SWC.
 3. **Native Bytecode Generation**: Generates standard Java 8+ `.class` files directly, executing native closures, arrow functions, and class declarations without any middle-step Kotlin or Java transpilation.
 4. **Embedded Zero-Dependency Runtime**: Packages everything — including a specialized JVM-backed, precompiled runtime helper package embedded directly in the compiler's binary — into a standard, lightweight, standalone executable JAR.
 
@@ -91,7 +91,7 @@ tsb compile src/main.ts --output ./build --package com.example.app
 ```
 Options:
 *   `-o, --output <dir>` — Output directory (default: `./build`)
-*   `-p, --package <pkg>` — Target JVM package path (default: `com.TSBytes.app`)
+*   `-p, --package <pkg>` — Target JVM package path (default: `com.tsbytes.app`)
 
 ### `tsb jar <file>`
 Compile TypeScript to a standalone, executable JAR archive.
@@ -100,13 +100,13 @@ tsb jar src/main.ts --output ./app.jar --package com.example.app
 ```
 Options:
 *   `-o, --output <path>` — Output `.jar` path (default: `./output.jar`)
-*   `-p, --package <pkg>` — Target JVM package path (default: `com.TSBytes.app`)
+*   `-p, --package <pkg>` — Target JVM package path (default: `com.tsbytes.app`)
 
 ---
 
 ## 🎯 Supported Standard Library & APIs
 
-TSBytes features a robust, zero-dependency, JVM-native implementation of standard ES built-ins, offering fully compliant reference equality and performance benefits:
+tsbytes features a robust, zero-dependency, JVM-native implementation of standard ES built-ins, offering fully compliant reference equality and performance benefits:
 
 | Built-in | Description | Status |
 | :--- | :--- | :---: |

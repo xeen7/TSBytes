@@ -75,7 +75,7 @@ fn write_tsconfig(dir: &Path) -> Result<()> {
 fn write_main_ts(src_dir: &Path) -> Result<()> {
     let content = r#"function greet(name: string) {
     console.log("Hello, " + name + "!");
-    console.log("Welcome to TSBytes - TypeScript running natively on the JVM!");
+    console.log("Welcome to tsbytes - TypeScript running natively on the JVM!");
 }
 
 async function main() {

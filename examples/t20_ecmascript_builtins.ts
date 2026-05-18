@@ -1,4 +1,4 @@
-// === ECMASCRIPT BUILT-INS COMPREHENSIVE TEST SUITE ===
+
 
 function assertEqual(actual: any, expected: any, message: string) {
     if (actual !== expected) {
@@ -8,36 +8,32 @@ function assertEqual(actual: any, expected: any, message: string) {
 
 function runGlobalFunctionsTests() {
     console.log("--- Global Functions ---");
-    // parseInt
+    
     assertEqual(parseInt("123"), 123, "parseInt basic");
     assertEqual(parseInt("101", 2), 5, "parseInt radix 2");
     assertEqual(parseInt("  -45abc"), -45, "parseInt signed/trailing");
     assertEqual(isNaN(parseInt("abc")), true, "parseInt NaN");
 
-    // parseFloat
     assertEqual(parseFloat("3.14159"), 3.14159, "parseFloat basic");
     assertEqual(parseFloat("  -0.5abc"), -0.5, "parseFloat signed/trailing");
     assertEqual(isNaN(parseFloat("xyz")), true, "parseFloat NaN");
 
-    // isNaN / isFinite
     assertEqual(isNaN(NaN), true, "isNaN(NaN)");
     assertEqual(isNaN(42), false, "isNaN(42)");
     assertEqual(isFinite(42), true, "isFinite(42)");
     assertEqual(isFinite(NaN), false, "isFinite(NaN)");
 
-    // URL components
     assertEqual(encodeURIComponent("hello world!"), "hello%20world!", "encodeURIComponent");
     assertEqual(decodeURIComponent("hello%20world!"), "hello world!", "decodeURIComponent");
 }
 
 function runDateTests() {
     console.log("--- Date Object ---");
-    // Date.now
+    
     const now = Date.now();
     assertEqual(typeof now === "number" && now > 0, true, "Date.now()");
 
-    // Constructor & Getters
-    const date = new Date(1715990400000); // 2024-05-18 UTC
+    const date = new Date(1715990400000); 
     assertEqual(date.getTime(), 1715990400000, "Date getTime");
     assertEqual(date.getFullYear(), 2024, "Date getFullYear");
     assertEqual(date.getMonth(), 4, "Date getMonth (0-indexed)");
@@ -71,7 +67,7 @@ function runSetTests() {
 
     set.add("apple");
     set.add("banana");
-    set.add("apple"); // duplicate
+    set.add("apple"); 
     assertEqual(set.size, 2, "Set size 2 (no duplicates)");
     assertEqual(set.has("banana"), true, "Set has banana");
 
@@ -87,7 +83,7 @@ function runJSONTests() {
     console.log("--- JSON Object ---");
     const obj = { name: "Antigravity", age: 1.0, active: true };
     const jsonStr = JSON.stringify(obj);
-    // Note: fields order depends on LinkedHashMap iteration, which preserves insertion order
+    
     assertEqual(jsonStr, '{"name":"Antigravity","age":1,"active":true}', "JSON stringify");
 
     const parsed = JSON.parse(jsonStr);
@@ -105,9 +101,9 @@ function runRegExpTests() {
 
     const execRes = regex.exec("HELLO beautiful");
     assertEqual(execRes !== null, true, "RegExp exec not null");
-    assertEqual(execRes[0], "HELLO beautiful", "RegExp exec match");
-    assertEqual(execRes[1], "beautiful", "RegExp exec capture group");
-    assertEqual(execRes.index, 0, "RegExp exec index");
+    assertEqual(execRes![0], "HELLO beautiful", "RegExp exec match");
+    assertEqual(execRes![1], "beautiful", "RegExp exec capture group");
+    assertEqual(execRes!.index, 0, "RegExp exec index");
 }
 
 function runObjectTests() {
@@ -144,7 +140,7 @@ function runObjectTests() {
 
 function runNumberTests() {
     console.log("--- Number & Math Objects ---");
-    // Static fields
+    
     assertEqual(Number.MAX_VALUE > 0, true, "Number.MAX_VALUE");
     assertEqual(Number.MIN_VALUE > 0, true, "Number.MIN_VALUE");
     assertEqual(Number.isNaN(Number.NaN), true, "Number.NaN");
@@ -152,7 +148,6 @@ function runNumberTests() {
     assertEqual(Math.PI > 3.14 && Math.PI < 3.15, true, "Math.PI");
     assertEqual(Math.E > 2.7 && Math.E < 2.8, true, "Math.E");
 
-    // Static methods
     assertEqual(Number.isInteger(42.0), true, "Number.isInteger (int)");
     assertEqual(Number.isInteger(42.42), false, "Number.isInteger (float)");
     assertEqual(Number.isSafeInteger(9007199254740991.0), true, "Number.isSafeInteger (max)");
@@ -163,7 +158,6 @@ function runNumberTests() {
     assertEqual(Number.parseInt("123"), 123.0, "Number.parseInt");
     assertEqual(Number.parseFloat("12.34"), 12.34, "Number.parseFloat");
 
-    // Instance methods
     const num = 123.456;
     assertEqual(num.toFixed(2), "123.46", "num.toFixed");
     assertEqual(num.toPrecision(4), "123.5", "num.toPrecision");
@@ -189,7 +183,6 @@ function runWeakMapTests() {
     assertEqual(wm.has(key1), false, "WeakMap has key1 after delete");
     assertEqual(wm.delete(key1), false, "WeakMap delete key1 again");
 
-    // Dynamic constructor initialization
     const key3 = { id: 3 };
     const wm2 = new WeakMap([[key3, "value3"]]);
     assertEqual(wm2.has(key3), true, "WeakMap2 initialized with key3");
@@ -212,12 +205,10 @@ function runWeakSetTests() {
     assertEqual(ws.has(val1), false, "WeakSet has val1 after delete");
     assertEqual(ws.delete(val1), false, "WeakSet delete val1 again");
 
-    // Dynamic constructor initialization
     const val3 = { id: 3 };
     const ws2 = new WeakSet([val3]);
     assertEqual(ws2.has(val3), true, "WeakSet2 initialized with val3");
 }
-
 
 function main() {
     console.log("=== RUNNING ECMASCRIPT BUILT-INS TEST SUITE ===");

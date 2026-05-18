@@ -6,7 +6,6 @@ function assertEqual(actual: any, expected: any, description: string) {
   }
 }
 
-// === 1. Shopping Cart & E-commerce Calculator (Array operations) ===
 interface CartItem {
   id: string;
   name: string;
@@ -16,13 +15,11 @@ interface CartItem {
 }
 
 function calculateCartTotal(cart: any[]) {
-  // Filter out of stock items
+  
   const activeItems = cart.filter(item => item.inStock);
-  
-  // Map to subtotals
+
   const subtotals = activeItems.map(item => item.price * item.quantity);
-  
-  // Reduce to calculate total price
+
   const grandTotal = subtotals.reduce((sum, current) => sum + current, 0);
   
   return grandTotal;
@@ -32,18 +29,13 @@ function runCartTests() {
   const cart: any[] = [
     { id: "p1", name: "Wireless Mouse", price: 25, quantity: 2, inStock: true },
     { id: "p2", name: "USB-C Cable", price: 12.5, quantity: 3, inStock: true },
-    { id: "p3", name: "Mechanical Keyboard", price: 99, quantity: 1, inStock: false }, // Out of stock
+    { id: "p3", name: "Mechanical Keyboard", price: 99, quantity: 1, inStock: false }, 
     { id: "p4", name: "4K Monitor", price: 299, quantity: 1, inStock: true }
   ];
 
-  // Mouse: 25 * 2 = 50
-  // Cable: 12.5 * 3 = 37.5
-  // Monitor: 299 * 1 = 299
-  // Total: 50 + 37.5 + 299 = 386.5
   const total = calculateCartTotal(cart);
   assertEqual(total, 386.5, "E-commerce grand total computation");
 
-  // Additional Array helper validations
   const hasExpensive = cart.some(item => item.price > 250);
   const allInStock = cart.every(item => item.inStock);
 
@@ -51,7 +43,6 @@ function runCartTests() {
   assertEqual(allInStock, false, "All cart items are in stock");
 }
 
-// === 2. User Profiles & Nullish Fallbacks (Optional Chaining & Object destructuring) ===
 function getUserTheme(user: any): any {
   return user.preferences?.theme ?? "system-default";
 }
@@ -84,18 +75,16 @@ function runProfileTests() {
   assertEqual(getUserTheme(user2), "system-default", "User2 theme fallback");
   assertEqual(getUserCity(user2), "Unknown City", "User2 city fallback");
 
-  // Destructuring with renaming & defaults
   const { username, preferences: { fontSize = 14 } = {} } = user1 as any;
   assertEqual(username, "coder123", "Destructured renamed variable");
   assertEqual(fontSize, 14, "Destructured default fontSize");
 }
 
-// === 3. Simple Currency & Log Formatting (Tagged templates) ===
-function formatCurrency(strings: string[], ...values: any[]) {
+function formatCurrency(strings: readonly string[], ...values: any[]) {
   let result = strings[0];
   for (let i = 0; i < values.length; i++) {
     const val = values[i];
-    // Format the cost parameter (at index 2) with currency prefix
+    
     const formatted = (i === 2) ? "$" + val : val;
     result += formatted + strings[i + 1];
   }
@@ -111,7 +100,6 @@ function runTemplateTests() {
   assertEqual(invoice, "Receipt: 3x Premium Coffee at $5.99 each", "Invoice currency formatting tag");
 }
 
-// === 4. Bank Account Manager (Classes with private fields & getters/setters) ===
 class BankAccount {
   #balance: number = 0;
   #ownerName: string;
@@ -153,23 +141,19 @@ function runClassTests() {
   assertEqual(account.owner, "Alice Smith", "Account owner name");
   assertEqual(account.balance, 100, "Initial account balance");
 
-  // Deposit test
   const depSuccess = account.deposit(50.5);
   assertEqual(depSuccess, true, "Deposit operation successful");
   assertEqual(account.balance, 150.5, "Balance after deposit");
 
-  // Withdrawal test
   const withdrawSuccess = account.withdraw(30);
   assertEqual(withdrawSuccess, true, "Withdrawal operation successful");
   assertEqual(account.balance, 120.5, "Balance after withdrawal");
 
-  // Insufficient funds test
   const overdrawSuccess = account.withdraw(200);
   assertEqual(overdrawSuccess, false, "Overdraft correctly rejected");
   assertEqual(account.balance, 120.5, "Balance remains unaffected by failed overdraft");
 }
 
-// === Main Execution Runner ===
 function main() {
   console.log("=== RUNNING DAILY USE CASES TEST SUITE ===");
   

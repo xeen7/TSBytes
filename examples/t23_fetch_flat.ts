@@ -1,8 +1,11 @@
-// Verification of fetch API without try-finally to isolate compiler panic
+
+
+declare function startMockServer(port: number): any;
+declare function stopMockServer(server: any): void;
 
 async function main() {
     console.log("Starting mock local HTTP server...");
-    // @ts-ignore
+    
     const server = startMockServer(8080);
     console.log("Mock server started successfully!");
 
@@ -15,16 +18,14 @@ async function main() {
     console.log("Response status: " + response.status);
     console.log("Response ok: " + response.ok);
     console.log("Response statusText: " + response.statusText);
-    
-    // Assert basic response fields
+
     if (response.status !== 200) {
         throw new Error("Expected status 200, got " + response.status);
     }
     if (response.ok !== true) {
         throw new Error("Expected ok to be true");
     }
-    
-    // Assert headers
+
     console.log("Checking headers...");
     const contentType = response.headers.get("content-type");
     console.log("Content-Type: " + contentType);
@@ -32,7 +33,6 @@ async function main() {
         throw new Error("Expected application/json in Content-Type header");
     }
 
-    // Assert body parsing via json()
     console.log("Parsing JSON body...");
     const data = await response.json();
     console.log("Parsed title: " + data.title);
@@ -78,7 +78,7 @@ async function main() {
     console.log("--- ALL FETCH API TESTS PASSED SUCCESSFULLY! ---");
 
     console.log("Stopping mock local HTTP server...");
-    // @ts-ignore
+    
     stopMockServer(server);
     console.log("Mock server stopped successfully!");
 }

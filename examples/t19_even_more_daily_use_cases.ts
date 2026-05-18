@@ -6,7 +6,6 @@ function assertEqual(actual: any, expected: any, description: string) {
   }
 }
 
-// === 1. Simple Event Emitter (PubSub Pattern) ===
 class EventEmitter {
   #listeners: any = {};
 
@@ -54,7 +53,6 @@ function runEventEmitterTests() {
   assertEqual(state.callCount, 2, "Listener call count incremented");
 }
 
-// === 2. Text Utilities (Slugify & Template replacer) ===
 function slugify(title: string): string {
   let slug = "";
   for (let i = 0; i < title.length; i++) {
@@ -62,7 +60,7 @@ function slugify(title: string): string {
     if (char === " ") {
       slug += "-";
     } else {
-      // Very simple lowercase conversion for letters A-Z
+      
       const code = char.charCodeAt(0);
       if (code >= 65 && code <= 90) {
         slug += String.fromCharCode(code + 32);
@@ -81,8 +79,7 @@ function replaceTemplate(template: string, params: any): string {
     const key = keys[i];
     const placeholder = "{" + key + "}";
     const value = params[key];
-    
-    // Replace all occurrences of placeholder
+
     while (result.includes(placeholder)) {
       const idx = result.indexOf(placeholder);
       result = result.substring(0, idx) + value + result.substring(idx + placeholder.length);
@@ -92,11 +89,10 @@ function replaceTemplate(template: string, params: any): string {
 }
 
 function runTextUtilityTests() {
-  // Test Slugify
+  
   const title = "My First Blog Post";
   assertEqual(slugify(title), "my-first-blog-post", "Slugified title string");
 
-  // Test Template Replacer
   const template = "Hi {name}, your package is scheduled for {day}!";
   const params: any = {
     name: "Alex",
@@ -106,28 +102,24 @@ function runTextUtilityTests() {
   assertEqual(rendered, "Hi Alex, your package is scheduled for Thursday!", "Rendered template string substitution");
 }
 
-// === 3. Dirty Data Sanitizer & Parser ===
 function sanitizePrices(rawItems: any[]): any[] {
   const cleanItems: any[] = [];
   for (let i = 0; i < rawItems.length; i++) {
     const item = rawItems[i];
-    
-    // Check if name is present
+
     const name = item.name ?? "Unnamed Item";
-    
-    // Parse price to double
+
     let rawPrice = item.price;
     let price = 0.0;
     if (rawPrice !== null && rawPrice !== undefined) {
       if (typeof rawPrice === "number") {
         price = rawPrice;
       } else if (typeof rawPrice === "string") {
-        // Simple parseFloat for string numbers
+        
         price = parseFloat(rawPrice);
       }
     }
-    
-    // Default to active true
+
     const active = item.active ?? true;
     
     cleanItems.push({
@@ -140,7 +132,7 @@ function sanitizePrices(rawItems: any[]): any[] {
 }
 
 function parseFloat(val: string): number {
-  // Support converting standard numeric strings like "19.99"
+  
   let num = 0.0;
   let hasDot = false;
   let divisor = 1.0;
@@ -185,7 +177,6 @@ function runSanitizerTests() {
   assertEqual(cleaned[2].price, 0.0, "Null price fell back to 0.0");
 }
 
-// === Main Execution Runner ===
 function main() {
   console.log("=== RUNNING EVEN MORE DAILY USE CASES TEST SUITE ===");
   

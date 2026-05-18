@@ -3,7 +3,7 @@ function main() {
 
   let finallyExecuted = false;
   let catchExecuted = false;
-  let exceptionMessage = "";
+  let exceptionMessage: any = "";
 
   try {
     console.log("Entering try block...");
