@@ -10,6 +10,9 @@ categories = ["compilers", "development-tools"]
 homepage = "https://github.com/xeen7/TSBytes"
 repository = "https://github.com/xeen7/TSBytes"
 
+[[bin]]
+name = "tsb"
+path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }

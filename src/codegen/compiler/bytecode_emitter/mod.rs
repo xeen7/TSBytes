@@ -706,11 +706,7 @@ pub fn generate_stack_map_table(cp: &mut ConstantPool, code: &[Instruction], exc
         };
         prev_byte = Some(target_byte);
 
-        let locals_idx = if let Some(&start_idx) = handler_to_start.get(&idx) {
-            start_idx
-        } else {
-            idx
-        };
+        let locals_idx = idx;
         
         let locals_state = in_locals[locals_idx].clone().unwrap_or_else(|| {
             let mut fallback = None;

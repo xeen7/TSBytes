@@ -6,13 +6,13 @@ use colored::Colorize;
 
 #[derive(Parser)]
 #[command(
-    name = "tsbyte",
+    name = "tsb",
     version,
     about = "Compile TypeScript directly to JVM bytecode and executable JARs",
-    long_about = "TSByte compiles TypeScript source files directly to JVM bytecode, \
+    long_about = "TSBytes compiles TypeScript source files directly to JVM bytecode, \
 then packages them into standard, executable JAR files.\n\
 No Kotlin. No Gradle. No runtime. Pure native.\n\n\
-Use 'tsbyte init' to create a new TypeScript-to-JVM project."
+Use 'tsb init' to create a new TypeScript-to-JVM project."
 )]
 struct Cli {
     #[command(subcommand)]
@@ -21,7 +21,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Create a new TSByte project
+    /// Create a new TSBytes project
     Init {
         /// Project directory (created if it doesn't exist)
         #[arg(default_value = ".")]
@@ -42,7 +42,7 @@ enum Commands {
         output: PathBuf,
 
         /// JVM package name
-        #[arg(short, long, default_value = "com.tsbyte.app")]
+        #[arg(short, long, default_value = "com.TSBytes.app")]
         package: String,
     },
 
@@ -56,7 +56,7 @@ enum Commands {
         output: PathBuf,
 
         /// JVM package name (e.g. com.example)
-        #[arg(short, long, default_value = "com.tsbyte.app")]
+        #[arg(short, long, default_value = "com.TSBytes.app")]
         package: String,
     },
 }
@@ -75,7 +75,7 @@ fn main() {
             });
 
             eprintln!(
-                "{} Creating new TSByte project: {}",
+                "{} Creating new TSBytes project: {}",
                 "⚡".bold(),
                 project_name.bold()
             );
@@ -84,7 +84,7 @@ fn main() {
                 Ok(()) => {
                     eprintln!("\n  {} Project created!", "✓".green().bold());
                     eprintln!("  {} cd {}", "→".blue().bold(), dir.display());
-                    eprintln!("  {} tsbyte jar src/main.ts", "→".blue().bold());
+                    eprintln!("  {} tsb jar src/main.ts", "→".blue().bold());
                 }
                 Err(e) => {
                     eprintln!("{} {}", "error:".red().bold(), e);

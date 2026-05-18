@@ -1,4 +1,4 @@
-use tsbyte::compile_to_bytes;
+use tsbytes::compile_to_bytes;
 use ristretto_classfile::{ClassFile, attributes::Attribute};
 use std::io::Cursor;
 
@@ -241,7 +241,7 @@ fn test_compile_service_class() {
 
 #[test]
 fn test_module_graph_registration() {
-    use tsbyte::codegen::compiler::module_graph::{ModuleGraph, ExportKind};
+    use tsbytes::codegen::compiler::module_graph::{ModuleGraph, ExportKind};
 
     let mut graph = ModuleGraph::new("com.tsbyte.app");
     let class = graph.register_module("src/services/math.ts");
@@ -261,7 +261,7 @@ fn test_module_graph_registration() {
 
 #[test]
 fn test_jvm_descriptors() {
-    use tsbyte::codegen::compiler::ir::{Type, build_method_descriptor};
+    use tsbytes::codegen::compiler::ir::{Type, build_method_descriptor};
 
     assert_eq!(Type::Int.to_jvm_descriptor(), "I");
     assert_eq!(Type::Double.to_jvm_descriptor(), "D");
@@ -465,7 +465,7 @@ fn test_type_checker_assignment() {
             x = "hello"; // error
         }
     "#;
-    let errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let errors = tsbytes::type_check_to_errors(ts).unwrap();
     assert!(errors.iter().any(|e| e.contains("Cannot assign type 'StringTy' to variable 'x' of type 'Double'")));
 }
 
@@ -479,7 +479,7 @@ fn test_type_checker_function_call() {
             greet(123); // error
         }
     "#;
-    let errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let errors = tsbytes::type_check_to_errors(ts).unwrap();
     assert!(errors.iter().any(|e| e.contains("Argument 0 to 'greet' is not assignable to 'StringTy', got 'Double'")));
 }
 
@@ -490,7 +490,7 @@ fn test_type_checker_arithmetic() {
             let a = "string" * 5; // error
         }
     "#;
-    let errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let errors = tsbytes::type_check_to_errors(ts).unwrap();
     assert!(errors.iter().any(|e| e.contains("Arithmetic operations require numeric types")));
 }
 
@@ -501,7 +501,7 @@ fn test_type_checker_return() {
             return "not a number"; // error
         }
     "#;
-    let errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let errors = tsbytes::type_check_to_errors(ts).unwrap();
     assert!(errors.iter().any(|e| e.contains("Cannot return type 'StringTy' from function expecting 'Double'")));
 }
 
@@ -520,7 +520,7 @@ fn test_type_checker_structural_interface() {
             let p2: Point = { x: 10 }; // Error: missing y
         }
     "#;
-    let errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let errors = tsbytes::type_check_to_errors(ts).unwrap();
     assert!(errors.iter().any(|e| e.contains("Cannot assign type 'Object([(\"x\", Double)])' to variable 'p2' of type 'Object([(\"x\", Double), (\"y\", Double)])'")));
 }
 
@@ -533,7 +533,7 @@ fn test_type_checker_generic_param() {
             handlePromise(bad); // Error: Promise<number> not assignable to Promise<string>
         }
     "#;
-    let _errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let _errors = tsbytes::type_check_to_errors(ts).unwrap();
     // In our simplified setup, `null as any` bypasses checks, but the function call arguments will fail
     // wait, we don't have generics correctly mocked in AST for Cast yet, so we will just test assignment
     let ts2 = r#"
@@ -542,7 +542,7 @@ fn test_type_checker_generic_param() {
             handlePromise(bad);
         }
     "#;
-    let errors2 = tsbyte::type_check_to_errors(ts2).unwrap();
+    let errors2 = tsbytes::type_check_to_errors(ts2).unwrap();
     assert!(errors2.iter().any(|e| e.contains("Argument 0 to 'handlePromise' is not assignable to 'Generic(\"Promise\", [StringTy])', got 'Generic(\"Promise\", [Double])'")));
 }
 
@@ -555,7 +555,7 @@ fn test_type_checker_field_access() {
             let age = u.age; // error
         }
     "#;
-    let errors = tsbyte::type_check_to_errors(ts).unwrap();
+    let errors = tsbytes::type_check_to_errors(ts).unwrap();
     assert!(errors.iter().any(|e| e.contains("Property 'age' does not exist on type 'Object([(\"name\", StringTy)])'")));
 }
 
@@ -574,20 +574,20 @@ fn test_mir_lowering_and_optimization() {
     "#;
     
     // We mock the pipeline to test MIR specifically
-    let mut builder = tsbyte::codegen::compiler::ir_builder::IrBuilder::new();
-    let module = tsbyte::swc_frontend::parse_typescript(ts, "test.ts");
+    let mut builder = tsbytes::codegen::compiler::ir_builder::IrBuilder::new();
+    let module = tsbytes::swc_frontend::parse_typescript(ts, "test.ts");
     let stmts = builder.build_module(&module);
     
-    let mut checker = tsbyte::codegen::compiler::type_checker::TypeChecker::new();
+    let mut checker = tsbytes::codegen::compiler::type_checker::TypeChecker::new();
     let _errors = checker.check_program(&stmts);
     
-    let lowerer = tsbyte::codegen::compiler::hir_to_mir::HirToMir::new();
+    let lowerer = tsbytes::codegen::compiler::hir_to_mir::HirToMir::new();
     let mir_funcs = lowerer.lower(&stmts);
     
     // Verify it compiled into some MIR blocks
     assert!(!mir_funcs.is_empty());
     
-    let optimized = tsbyte::codegen::compiler::mir_opt::MirOptimizer::optimize(mir_funcs);
+    let optimized = tsbytes::codegen::compiler::mir_opt::MirOptimizer::optimize(mir_funcs);
     
     let test_mir = optimized.iter().find(|f| f.name == "testMir").expect("Expected testMir function");
     
@@ -599,7 +599,7 @@ fn test_mir_lowering_and_optimization() {
     let mut found_52 = false;
     for block in test_mir.blocks.values() {
         for instr in &block.instrs {
-            if let tsbyte::codegen::compiler::mir::MirInstr::Assign(_, tsbyte::codegen::compiler::mir::MirExpr::Operand(tsbyte::codegen::compiler::mir::Operand::Const(tsbyte::codegen::compiler::mir::Constant::Double(v), _))) = instr {
+            if let tsbytes::codegen::compiler::mir::MirInstr::Assign(_, tsbytes::codegen::compiler::mir::MirExpr::Operand(tsbytes::codegen::compiler::mir::Operand::Const(tsbytes::codegen::compiler::mir::Constant::Double(v), _))) = instr {
                 if *v == 52.0 {
                     found_52 = true;
                 }
@@ -622,7 +622,7 @@ fn test_jar_packaging() {
 
     let output_path = PathBuf::from("/tmp/tsbyte_test_output.jar");
 
-    tsbyte::compile_to_jar(ts, "com.example", &output_path)
+    tsbytes::compile_to_jar(ts, "com.example", &output_path)
         .expect("JAR compilation failed");
 
     assert!(output_path.exists(), "JAR file was not created");
@@ -671,7 +671,7 @@ fn test_compile_getters_setters() {
             return t.fahrenheit;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Class should compile successfully");
 }
@@ -691,7 +691,7 @@ fn test_compile_define_property() {
             return obj.score * obj.multiplier;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Class should compile successfully");
 }
@@ -705,7 +705,7 @@ fn test_compile_array_length() {
             return len;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Class should compile array length");
 }
@@ -723,7 +723,7 @@ fn test_compile_array_push_pop() {
             return arr.length;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Class should compile array push/pop");
 }
@@ -742,7 +742,7 @@ fn test_compile_array_methods() {
             return combined.length;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Class should compile array methods");
 }
@@ -773,7 +773,7 @@ fn test_compile_newly_implemented_features() {
             return first + second;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Newly implemented features should compile to JVM bytecode perfectly");
 }
@@ -795,7 +795,7 @@ fn test_compile_further_features() {
             return x;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Further features (enum, satisfies, sequence, as const) should compile to JVM bytecode perfectly");
 }
@@ -831,7 +831,7 @@ fn test_compile_advanced_roadmapped_features() {
             return first;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Advanced roadmapped features should compile to JVM bytecode perfectly");
 }
@@ -882,7 +882,7 @@ fn test_compile_further_advanced_features() {
             return meta.url;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Further advanced features should compile to JVM bytecode perfectly");
 }
@@ -930,7 +930,7 @@ fn test_compile_advanced_phase_3() {
             return aliasVal;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Advanced Phase 3 features should compile to JVM bytecode perfectly");
 }
@@ -1003,7 +1003,7 @@ fn test_compile_phase_4_features() {
         type InferType<T> = T extends (infer U)[] ? U : T; // infer keyword
         type PartialPoint = Partial<Point>; // utility type
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Phase 4 compiler features (generators, yield, yield*, decorators, advanced types) should compile perfectly");
 }
@@ -1017,7 +1017,7 @@ fn test_compile_destructuring_defaults() {
             return x + y + a + c;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Destructuring with default values should compile to JVM bytecode successfully");
 }
@@ -1039,7 +1039,7 @@ fn test_compile_advanced_class_blocks_initializers() {
             }
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Advanced class components should compile to JVM bytecode successfully");
 }
@@ -1054,7 +1054,7 @@ fn test_compile_generic_erasure_lookup() {
             return node.value;
         }
     "#;
-    let bytes = tsbyte::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
+    let bytes = tsbytes::compile_to_bytes(ts, "com.tsbyte.test").unwrap();
     let class = parse_class(&bytes);
     assert!(!class.methods.is_empty(), "Field access on variables with generic types should compile successfully");
 }

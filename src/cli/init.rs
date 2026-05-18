@@ -41,7 +41,7 @@ fn write_package_json(dir: &Path, name: &str) -> Result<()> {
   "version": "1.0.0",
   "main": "src/main.ts",
   "scripts": {{
-    "build": "tsbyte jar src/main.ts --output app.jar",
+    "build": "tsb jar src/main.ts --output app.jar",
     "typecheck": "tsc --noEmit"
   }},
   "devDependencies": {{
@@ -75,7 +75,7 @@ fn write_tsconfig(dir: &Path) -> Result<()> {
 fn write_main_ts(src_dir: &Path) -> Result<()> {
     let content = r#"function greet(name: string) {
     console.log("Hello, " + name + "!");
-    console.log("Welcome to TSByte - TypeScript running natively on the JVM!");
+    console.log("Welcome to TSBytes - TypeScript running natively on the JVM!");
 }
 
 async function main() {
@@ -102,8 +102,8 @@ fn write_gitignore(dir: &Path) -> Result<()> {
     let content = r#"node_modules/
 build/
 app.jar
-.tsbyte_build/
-.tsbyte_classes/
+.tsbytes_build/
+.tsbytes_classes/
 "#;
     fs::write(dir.join(".gitignore"), content)?;
     Ok(())
