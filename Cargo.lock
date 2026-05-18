@@ -1211,8 +1211,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "tsbyte"
-version = "0.5.11"
+name = "tsbytes"
+version = "0.5.12"
 dependencies = [
  "clap",
  "colored",
