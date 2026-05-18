@@ -29,6 +29,9 @@ pub fn init_project(dir: &Path, name: &str) -> Result<()> {
     // .gitignore
     write_gitignore(dir)?;
 
+    // README.md
+    write_readme(dir, &package_name)?;
+
     // Install dependencies
     install_deps(dir)?;
 
@@ -106,6 +109,42 @@ app.jar
 .tsbytes_classes/
 "#;
     fs::write(dir.join(".gitignore"), content)?;
+    Ok(())
+}
+
+fn write_readme(dir: &Path, name: &str) -> Result<()> {
+    let content = format!(r#"# {name}
+
+Welcome to your TSDroid project! This project runs TypeScript natively on the JVM.
+
+## Getting Started
+
+1. **Install dependencies** (if not already done):
+   ```bash
+   npm install
+   ```
+
+2. **Typecheck your code**:
+   ```bash
+   npm run typecheck
+   ```
+
+3. **Build the executable**:
+   ```bash
+   npm run build
+   ```
+
+4. **Run the application**:
+   ```bash
+   java -jar app.jar
+   ```
+
+## Guidelines
+- Write your TypeScript code in the `src/` directory.
+- `tsb` compiles your code into JVM bytecode.
+- Enjoy building TypeScript for the JVM!
+"#);
+    fs::write(dir.join("README.md"), content)?;
     Ok(())
 }
 
