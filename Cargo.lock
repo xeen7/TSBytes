@@ -1206,7 +1206,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tsbytes"
+name = "tsb"
 version = "1.0.0-rc.2"
 dependencies = [
  "clap",
