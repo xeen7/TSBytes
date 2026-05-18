@@ -1,0 +1,22 @@
+[package]
+name = "tsbyte"
+version = "0.5.11"
+edition = "2021"
+description = "Compile TypeScript directly to native JVM bytecode and executable JARs"
+license = "MIT"
+readme = "README.md"
+keywords = ["typescript", "compiler", "jvm", "bytecode", "java"]
+categories = ["compilers", "development-tools"]
+homepage = "https://github.com/xeen7/TSBytes"
+repository = "https://github.com/xeen7/TSBytes"
+
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+thiserror = "2.0.18"
+colored = "3.1.1"
+ristretto_classfile = "0.9.0"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+swc_core = { version = "0.90.0", features = ["ecma_ast", "ecma_parser", "ecma_visit", "common"] }
+zip = { version = "0.6.6", default-features = false, features = ["deflate"] }
