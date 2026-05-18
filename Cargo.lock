@@ -1207,7 +1207,7 @@ dependencies = [
 
 [[package]]
 name = "tsbytes"
-version = "0.5.12"
+version = "1.0.0-rc.2"
 dependencies = [
  "clap",
  "colored",
