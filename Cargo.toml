@@ -1,6 +1,6 @@
 [package]
-name = "tsbyte"
-version = "0.5.11"
+name = "tsbytes"
+version = "0.5.12"
 edition = "2021"
 description = "Compile TypeScript directly to native JVM bytecode and executable JARs"
 license = "MIT"
