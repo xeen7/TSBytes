@@ -13,20 +13,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "TSBytes"
-version = "1.0.0-rc.2"
-dependencies = [
- "clap",
- "colored",
- "ristretto_classfile",
- "serde",
- "serde_json",
- "swc_core",
- "thiserror 2.0.18",
- "zip",
-]
-
-[[package]]
 name = "adler2"
 version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1217,6 +1203,20 @@ checksum = "dd69c5aa8f924c7519d6372789a74eac5b94fb0f8fcf0d4a97eb0bfc3e785f39"
 dependencies = [
  "serde",
  "stable_deref_trait",
+]
+
+[[package]]
+name = "tsbytes"
+version = "1.0.0-rc.4"
+dependencies = [
+ "clap",
+ "colored",
+ "ristretto_classfile",
+ "serde",
+ "serde_json",
+ "swc_core",
+ "thiserror 2.0.18",
+ "zip",
 ]
 
 [[package]]
