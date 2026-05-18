@@ -1,8 +1,0 @@
-{
-  "name": "My App",
-  "displayName": "My App",
-  "package": "com.myapp",
-  "minSdk": 24,
-  "targetSdk": 34,
-  "entry": "App.tsx"
-}
