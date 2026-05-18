@@ -80,7 +80,7 @@ fn main() {
                 project_name.bold()
             );
 
-            match tsbyte::cli::init::init_project(&dir, &project_name) {
+            match tsbytes::cli::init::init_project(&dir, &project_name) {
                 Ok(()) => {
                     eprintln!("\n  {} Project created!", "✓".green().bold());
                     eprintln!("  {} cd {}", "→".blue().bold(), dir.display());
@@ -106,7 +106,7 @@ fn main() {
                 file.display()
             );
 
-            match tsbyte::compile(&source, &package, &output) {
+            match tsbytes::compile(&source, &package, &output) {
                 Ok(()) => {
                     eprintln!(
                         "  {} .class written to {}/{}",
@@ -132,7 +132,7 @@ fn main() {
                 output.display()
             );
 
-            match tsbyte::compile_to_jar(&source, &package, &output) {
+            match tsbytes::compile_to_jar(&source, &package, &output) {
                 Ok(()) => {
                     eprintln!(
                         "  {} JAR written to {}",
